@@ -107,17 +107,13 @@ Node* newNode(int val) {
 
 class Solution {
   public:
-  int minn=INT_MAX;
-    void pre(Node* node){
-        if(node==nullptr) return;
-        if(minn>node->data) minn=node->data;
-        pre(node->left);
-        pre(node->right);
-    }
     int minValue(Node* root) {
         // Code here
-        pre(root);
-        return minn;
+        if(root==nullptr) return -1;
+        while(root->left){
+            root=root->left;
+        }
+        return root->data;
     }
 };
 
