@@ -23,32 +23,20 @@ class Solution{
 public:
     int floor(Node* root, int x) {
         // Code here
-        if(root==nullptr) return -1;
-        Node* mover=root;
-        Node* mark=root;
-        while(mover){
-            if(mover->data==x) return x;
-            if(mover->data>x && mover->left){
-                mover=mover->left;
+        int ceil=-1;
+        while(root){
+            if(root->data==x){
+                return x;
             }
-            else if(mover->data<x && mover->right){
-                mark=mover;
-                mover=mover->right;
-            }
-            else if(mover->data<x){
-                return mover->data;
+            if(root->data>x){
+                root=root->left;
             }
             else{
-                if(mark->data<x){
-                    return mark->data;
-                    
-                }
-                else{
-                    return -1;
-                }
+                ceil=root->data;
+                root=root->right;
             }
         }
-        return root->data;
+        return ceil;
     }
 };
 
