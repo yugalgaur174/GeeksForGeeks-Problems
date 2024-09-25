@@ -93,7 +93,6 @@ Node* buildTree(string str)
 // } Driver Code Ends
 //Function to return a list containing the bottom view of the given tree.
 
-
 class Solution {
   public:
     vector <int> bottomView(Node *root) {
@@ -101,20 +100,21 @@ class Solution {
         vector<int> arr;
         if(root==nullptr) return arr;
         queue<pair<Node*,int>> q;
-        q.push(make_pair(root,0));
-        map<int,int> mpp;
+        map<int,int>mpp;
+        q.push({root,0});
         while(!q.empty()){
             auto it=q.front();
-            Node* node=it.first;
-            int lineno=it.second;
+            int line=it.second;
             q.pop();
-            mpp[lineno]=node->data;
+            Node* node=it.first;
+            mpp[line]=node->data;
             if(node->left!=nullptr){
-                q.push(make_pair(node->left,lineno-1));
+                q.push({node->left, line-1});
             }
             if(node->right!=nullptr){
-                q.push(make_pair(node->right,lineno+1));
+                q.push({node->right,line+1});
             }
+            
         }
         for(auto it:mpp){
             arr.push_back(it.second);
