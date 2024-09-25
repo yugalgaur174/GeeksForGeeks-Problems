@@ -105,54 +105,28 @@ class Solution
     vector<int> topView(Node *root)
     {
         //Your code here
-        
         vector<int> arr;
         if(root==nullptr) return arr;
-        queue<pair<Node*, int>>q;
+        queue<pair<Node*, int>> q;
         q.push(make_pair(root,0));
-        map<int,int>mpp;
+        map<int,int> mpp;
         while(!q.empty()){
-            auto it=q.front();
+            auto node= q.front();
             q.pop();
-            Node* node=it.first;
-            int lineno=it.second;
-            if(mpp.find(lineno)==mpp.end()) mpp[lineno]=node->data;
-            if(node->left!=nullptr){
-                q.push(make_pair(node->left,lineno-1));
+            int line=node.second;
+            Node* n=node.first;
+            if(mpp.find(line)==mpp.end()) mpp[line]=n->data;
+            if(n->left!=nullptr){
+                q.push(make_pair(n->left,line-1));
             }
-            if(node->right!=nullptr){
-                q.push(make_pair(node->right,lineno+1));
+            if(n->right!=nullptr){
+                q.push(make_pair(n->right,line+1));
             }
         }
         for(auto it:mpp){
             arr.push_back(it.second);
         }
-        
         return arr;
-        
-        
-        // vector<int> arr;
-        // if(root==nullptr) return arr;
-        // queue<pair<Node*,int>> q;
-        // map<int,int> mpp;
-        // q.push(make_pair(root,0));
-        // while(!q.empty()){
-        //     auto it=q.front();
-        //     q.pop();
-        //     Node *node=it.first;
-        //     int lineno=it.second;
-        //     if(mpp.find(lineno)==mpp.end()) mpp[lineno]=node->data;
-        //     if(node->left!=nullptr){
-        //         q.push(make_pair(node->left,lineno-1));
-        //     }
-        //     if(node->right!=nullptr){
-        //         q.push(make_pair(node->right,lineno+1));
-        //     }
-        // }
-        // for(auto it:mpp){
-        //     arr.push_back(it.second);
-        // }
-        // return arr;
     }
 
 };
