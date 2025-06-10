@@ -13,22 +13,23 @@ class Solution {
             adj[a].push_back({b,c});
             adj[b].push_back({a,c});
         }
-        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
-        // for(int i=0;i<adj[src].size();i++){
-        //     pq.push({adj[src][i].second, adj[src][i].first});
-        // }
-        pq.push({0,src});
-        while(!pq.empty()){
-            int a=pq.top().first;
-            int b=pq.top().second;
-            pq.pop();
-            for(int i=0;i<adj[b].size();i++){
-                int c=adj[b][i].first;
-                int d=adj[b][i].second;
-                if(a+d<ans[c]){
-                    ans[c]=a+d;
-                    pq.push({ans[c],c});
-                }
+        set<pair<int, int>> st;
+        st.insert({0,src});
+        while(!st.empty()){
+            auto i=*(st.begin());
+            int node=i.second;
+            int dist=i.first;
+            st.erase(i);
+            for(auto it: adj[node]){
+                 int adjnode=it.first;
+                 int edge=it.second;
+                 if(dist+edge<ans[adjnode]){
+                     if(ans[adjnode]!=INT_MAX){
+                         st.erase({ans[adjnode],adjnode});
+                     }
+                     ans[adjnode]=dist+edge;
+                     st.insert({ans[adjnode],adjnode});
+                 }
             }
         }
         return ans;
